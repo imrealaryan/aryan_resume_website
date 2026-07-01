@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aryan Jain — Cloud Support Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ── Reset & Tokens ─────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --navy:      #060E1E;
+  --navy-mid:  #0B1528;
+  --navy-card: #0F1E35;
+  --navy-line: #1A2E4A;
+  --cyan:      #00D4FF;
+  --cyan-dim:  rgba(0, 212, 255, 0.12);
+  --cyan-glow: rgba(0, 212, 255, 0.25);
+  --orange:    #FF9900;
+  --orange-dim:rgba(255, 153, 0, 0.12);
+  --green:     #00E676;
+  --text:      #E2EBF3;
+  --muted:     #7A94B0;
+  --mono: 'JetBrains Mono', ui-monospace, monospace;
+  --sans: 'Inter', system-ui, sans-serif;
+}
+
+html { scroll-behavior: smooth; color-scheme: dark; }
+
+body {
+  background: var(--navy);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--cyan); text-decoration: none; }
+a:hover { text-decoration: underline; }
+a:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
+
+/* ── Noise texture overlay ──────────────────────────────────────────────── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  opacity: 0.4;
+}
+
+/* ── Nav ────────────────────────────────────────────────────────────────── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  height: 60px;
+  background: rgba(6, 14, 30, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--navy-line);
+}
+
+.nav__brand {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--cyan);
+  letter-spacing: 0.05em;
+}
+
+.nav__links {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+}
+
+.nav__links a {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  transition: color 0.2s;
+}
+.nav__links a:hover { color: var(--cyan); text-decoration: none; }
+
+.nav__cta {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--navy) !important;
+  background: var(--cyan);
+  padding: 7px 18px;
+  border-radius: 4px;
+  letter-spacing: 0.04em;
+  transition: opacity 0.2s;
+}
+.nav__cta:hover { opacity: 0.85; text-decoration: none !important; }
+
+/* ── Sections ───────────────────────────────────────────────────────────── */
+section { position: relative; z-index: 1; }
+.container { max-width: 1000px; margin: 0 auto; padding: 0 32px; }
+.section-wrap { padding: 96px 0; }
+
+/* ── Hero ───────────────────────────────────────────────────────────────── */
+#hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding-top: 60px;
+  background:
+    radial-gradient(ellipse 70% 60% at 60% 40%, rgba(0, 212, 255, 0.06) 0%, transparent 70%),
+    var(--navy);
+}
+
+.hero__eyebrow {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--cyan);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hero__eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 28px;
+  height: 1px;
+  background: var(--cyan);
+}
+
+.hero__name {
+  font-family: var(--mono);
+  font-size: clamp(2.8rem, 7vw, 5.2rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: #fff;
+  margin-bottom: 12px;
+}
+
+.hero__title {
+  font-family: var(--sans);
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  font-weight: 300;
+  color: var(--muted);
+  margin-bottom: 36px;
+}
+
+.hero__title span { color: var(--cyan); font-weight: 500; }
+
+.hero__summary {
+  max-width: 600px;
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--muted);
+  margin-bottom: 48px;
+}
+
+/* ── Uptime stat — the signature element ───────────────────────────────── */
+.hero__stats {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+  margin-bottom: 48px;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stat__value {
+  font-family: var(--mono);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--cyan);
+  line-height: 1;
+}
+
+.stat__value.orange { color: var(--orange); }
+.stat__value.green  { color: var(--green); }
+
+.stat__label {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* uptime live counter */
+.stat__pulse {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--green);
+  letter-spacing: 0.06em;
+}
+
+.pulse-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  animation: blink 1.6s ease-in-out infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.2; }
+}
+
+.hero__actions {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 28px;
+  border-radius: 5px;
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none !important;
+}
+
+.btn--primary {
+  background: var(--cyan);
+  color: var(--navy);
+}
+.btn--primary:hover { opacity: 0.88; transform: translateY(-1px); }
+
+.btn--ghost {
+  background: transparent;
+  color: var(--cyan);
+  border: 1px solid rgba(0, 212, 255, 0.4);
+}
+.btn--ghost:hover {
+  border-color: var(--cyan);
+  background: var(--cyan-dim);
+  transform: translateY(-1px);
+}
+
+/* ── Section label ─────────────────────────────────────────────────────── */
+.section-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-label::after {
+  content: '';
+  flex: 1;
+  max-width: 48px;
+  height: 1px;
+  background: var(--cyan);
+}
+
+.section-title {
+  font-family: var(--mono);
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 48px;
+  letter-spacing: -0.02em;
+}
+
+/* ── About ─────────────────────────────────────────────────────────────── */
+#about { background: var(--navy-mid); }
+
+.about__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: start;
+}
+
+.about__text p {
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+
+.about__text p strong { color: var(--text); }
+
+.about__contact {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 28px;
+}
+
+.contact__row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.contact__icon {
+  width: 32px; height: 32px;
+  border-radius: 6px;
+  background: var(--cyan-dim);
+  border: 1px solid rgba(0,212,255,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.about__certs {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cert-badge {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  background: var(--navy-card);
+  border: 1px solid var(--navy-line);
+  border-radius: 8px;
+  transition: border-color 0.2s;
+}
+.cert-badge:hover { border-color: rgba(0,212,255,0.35); }
+
+.cert-badge__icon {
+  font-size: 22px;
+  width: 40px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.cert-badge__name {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+
+.cert-badge__issuer {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+}
+
+/* ── Skills ─────────────────────────────────────────────────────────────── */
+#skills { background: var(--navy); }
+
+.skills__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.skill-card {
+  background: var(--navy-card);
+  border: 1px solid var(--navy-line);
+  border-radius: 8px;
+  padding: 22px 24px;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.skill-card:hover {
+  border-color: rgba(0,212,255,0.25);
+  transform: translateY(-2px);
+}
+
+.skill-card__icon { font-size: 22px; margin-bottom: 10px; }
+
+.skill-card__label {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  margin-bottom: 10px;
+}
+
+.skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.tag {
+  font-family: var(--mono);
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  background: rgba(0,212,255,0.07);
+  border: 1px solid rgba(0,212,255,0.18);
+  color: var(--text);
+}
+
+.tag.orange {
+  background: rgba(255,153,0,0.08);
+  border-color: rgba(255,153,0,0.25);
+  color: #FFB84D;
+}
+
+.tag.azure {
+  background: rgba(0,120,212,0.1);
+  border-color: rgba(0,120,212,0.3);
+  color: #4DA6FF;
+}
+
+.tag.green {
+  background: rgba(0,230,118,0.07);
+  border-color: rgba(0,230,118,0.2);
+  color: #33E87A;
+}
+
+/* ── Experience timeline ─────────────────────────────────────────────────── */
+#experience { background: var(--navy-mid); }
+
+.timeline {
+  position: relative;
+  padding-left: 28px;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 8px; bottom: 0;
+  width: 1px;
+  background: linear-gradient(to bottom, var(--cyan), transparent);
+}
+
+.timeline__item {
+  position: relative;
+  padding-bottom: 56px;
+}
+
+.timeline__item:last-child { padding-bottom: 0; }
+
+.timeline__dot {
+  position: absolute;
+  left: -34px; top: 6px;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--cyan);
+  border: 2px solid var(--navy-mid);
+  box-shadow: 0 0 0 3px rgba(0,212,255,0.25);
+}
+
+.timeline__meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 6px;
+  flex-wrap: wrap;
+}
+
+.timeline__period {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+
+.timeline__badge {
+  font-family: var(--mono);
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 20px;
+  background: var(--orange-dim);
+  color: var(--orange);
+  border: 1px solid rgba(255,153,0,0.25);
+}
+
+.timeline__role {
+  font-size: 17px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 2px;
+}
+
+.timeline__company {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--cyan);
+  margin-bottom: 18px;
+}
+
+.timeline__bullets {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  padding: 0;
+  list-style: none;
+}
+
+.timeline__bullets li {
+  display: flex;
+  gap: 12px;
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+.timeline__bullets li::before {
+  content: '▸';
+  color: var(--cyan);
+  flex-shrink: 0;
+  margin-top: 1px;
+  font-size: 11px;
+}
+
+.timeline__bullets li strong { color: var(--text); }
+
+/* ── Education ──────────────────────────────────────────────────────────── */
+#education { background: var(--navy); }
+
+.edu-card {
+  background: var(--navy-card);
+  border: 1px solid var(--navy-line);
+  border-left: 3px solid var(--cyan);
+  border-radius: 8px;
+  padding: 32px 36px;
+  display: flex;
+  gap: 36px;
+  align-items: flex-start;
+}
+
+.edu-card__icon {
+  font-size: 36px;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.edu-card__degree {
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.edu-card__inst {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--cyan);
+  margin-bottom: 6px;
+}
+
+.edu-card__via {
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.edu-card__period {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--muted);
+  background: var(--navy-line);
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 4px;
+}
+
+/* ── Contact CTA ────────────────────────────────────────────────────────── */
+#contact {
+  background: var(--navy-mid);
+  text-align: center;
+}
+
+.contact__cta h2 {
+  font-family: var(--mono);
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 14px;
+}
+
+.contact__cta p {
+  font-size: 15px;
+  color: var(--muted);
+  margin-bottom: 36px;
+}
+
+.contact__links {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+/* ── Footer ─────────────────────────────────────────────────────────────── */
+footer {
+  background: var(--navy);
+  border-top: 1px solid var(--navy-line);
+  padding: 28px 32px;
+  text-align: center;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--muted);
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Scroll reveal ───────────────────────────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; }
+  * { animation: none !important; transition: none !important; }
+}
+
+/* ── Responsive ─────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  nav { padding: 0 20px; }
+  .nav__links { display: none; }
+  .container { padding: 0 20px; }
+  .section-wrap { padding: 72px 0; }
+  .about__grid { grid-template-columns: 1fr; gap: 36px; }
+  .skills__grid { grid-template-columns: 1fr; }
+  .edu-card { flex-direction: column; gap: 16px; padding: 24px; }
+  .hero__stats { gap: 28px; }
+  .timeline { padding-left: 20px; }
+  .timeline__dot { left: -26px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── Nav ──────────────────────────────────────────────────────────────────── -->
+<nav aria-label="Main navigation">
+  <div class="nav__brand">aryan.jain</div>
+  <ul class="nav__links">
+    <li><a href="#about">about</a></li>
+    <li><a href="#skills">skills</a></li>
+    <li><a href="#experience">experience</a></li>
+    <li><a href="#education">education</a></li>
+    <li><a href="#contact">contact</a></li>
+  </ul>
+  <a href="mailto:imrealaryanjain@gmail.com" class="btn btn--primary nav__cta">Hire Me</a>
+</nav>
+
+<!-- ── Hero ─────────────────────────────────────────────────────────────────── -->
+<section id="hero">
+  <div class="container">
+    <div class="hero__eyebrow">Cloud Support Engineer</div>
+    <h1 class="hero__name">Aryan<br>Jain</h1>
+    <p class="hero__title">AWS Certified &nbsp;·&nbsp; <span>Multi-Cloud</span> &nbsp;·&nbsp; 7+ Years</p>
+    <p class="hero__summary">
+      Cloud infrastructure professional specialising in operations, monitoring, and troubleshooting
+      across AWS, Azure, and GCP. Known for keeping production systems running at 99.9% uptime
+      and slashing cloud costs through smart governance.
+    </p>
+
+    <div class="hero__stats">
+      <div class="stat">
+        <span class="stat__value" id="uptime-counter">99.9<span style="font-size:1.1rem">%</span></span>
+        <span class="stat__label">Production Uptime</span>
+        <span class="stat__pulse"><span class="pulse-dot"></span>live systems</span>
+      </div>
+      <div class="stat">
+        <span class="stat__value orange">35%+</span>
+        <span class="stat__label">Cloud Cost Reduction</span>
+        <span class="stat__pulse" style="color:var(--orange)"><span class="pulse-dot" style="background:var(--orange)"></span>via right-sizing</span>
+      </div>
+      <div class="stat">
+        <span class="stat__value green">7+</span>
+        <span class="stat__label">Years Experience</span>
+        <span class="stat__pulse" style="color:var(--green)"><span class="pulse-dot" style="background:var(--green)"></span>HCL · NAB · Lenskart</span>
+      </div>
+    </div>
+
+    <div class="hero__actions">
+      <a href="#experience" class="btn btn--primary">View My Work</a>
+      <a href="mailto:imrealaryanjain@gmail.com" class="btn btn--ghost">Get in Touch</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── About ─────────────────────────────────────────────────────────────────── -->
+<section id="about">
+  <div class="container section-wrap">
+    <div class="about__grid">
+      <div class="about__text reveal">
+        <div class="section-label">About</div>
+        <h2 class="section-title">The Engineer<br>Behind the Uptime</h2>
+        <p>
+          I'm a <strong>Cloud Support Engineer</strong> based in Delhi with over 7 years of hands-on
+          experience keeping mission-critical infrastructure running — from a regulated banking
+          environment at <strong>National Australia Bank</strong> to a high-traffic e-commerce platform
+          at <strong>Lenskart</strong>.
+        </p>
+        <p>
+          My work spans incident response, cost governance, container orchestration, and IaC — all
+          underpinned by a Computer Science degree from <strong>BITS Pilani</strong> and
+          two AWS certifications. I'm equally comfortable debugging a Kubernetes pod at 2 AM and
+          writing a Terraform module that prevents the next incident from happening.
+        </p>
+        <div class="about__contact">
+          <div class="contact__row">
+            <div class="contact__icon">📍</div>
+            Delhi, India
+          </div>
+          <div class="contact__row">
+            <div class="contact__icon">✉️</div>
+            <a href="mailto:imrealaryanjain@gmail.com">imrealaryanjain@gmail.com</a>
+          </div>
+          <div class="contact__row">
+            <div class="contact__icon">📞</div>
+            +91 99718 01593
+          </div>
+        </div>
+      </div>
+
+      <div class="about__certs reveal" style="transition-delay:0.12s">
+        <div class="section-label">Certifications</div>
+        <div style="height:14px"></div>
+        <div class="cert-badge">
+          <div class="cert-badge__icon">🏅</div>
+          <div>
+            <div class="cert-badge__name">Solutions Architect – Associate</div>
+            <div class="cert-badge__issuer">Amazon Web Services (AWS)</div>
+          </div>
+        </div>
+        <div class="cert-badge">
+          <div class="cert-badge__icon">☁️</div>
+          <div>
+            <div class="cert-badge__name">Cloud Practitioner</div>
+            <div class="cert-badge__issuer">Amazon Web Services (AWS)</div>
+          </div>
+        </div>
+        <div class="cert-badge">
+          <div class="cert-badge__icon">🔷</div>
+          <div>
+            <div class="cert-badge__name">Azure Fundamentals AZ-900</div>
+            <div class="cert-badge__issuer">Microsoft Azure</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Skills ─────────────────────────────────────────────────────────────────── -->
+<section id="skills">
+  <div class="container section-wrap">
+    <div class="section-label reveal">Skills</div>
+    <h2 class="section-title reveal">Technical Stack</h2>
+
+    <div class="skills__grid">
+
+      <div class="skill-card reveal">
+        <div class="skill-card__icon">☁️</div>
+        <div class="skill-card__label">Cloud Platforms</div>
+        <div class="skill-tags">
+          <span class="tag orange">AWS</span>
+          <span class="tag azure">Azure</span>
+          <span class="tag green">GCP</span>
+        </div>
+      </div>
+
+      <div class="skill-card reveal" style="transition-delay:0.08s">
+        <div class="skill-card__icon">🐳</div>
+        <div class="skill-card__label">Containers &amp; Orchestration</div>
+        <div class="skill-tags">
+          <span class="tag">Docker</span>
+          <span class="tag">Kubernetes</span>
+        </div>
+      </div>
+
+      <div class="skill-card reveal" style="transition-delay:0.12s">
+        <div class="skill-card__icon">🏗️</div>
+        <div class="skill-card__label">IaC &amp; CI/CD</div>
+        <div class="skill-tags">
+          <span class="tag">Terraform</span>
+          <span class="tag">Jenkins</span>
+          <span class="tag">GitHub</span>
+        </div>
+      </div>
+
+      <div class="skill-card reveal" style="transition-delay:0.16s">
+        <div class="skill-card__icon">🐍</div>
+        <div class="skill-card__label">Scripting &amp; Automation</div>
+        <div class="skill-tags">
+          <span class="tag">Python</span>
+          <span class="tag" style="font-size:11px">CPU / RAM / Disk Alerts</span>
+          <span class="tag">Mail Automation</span>
+        </div>
+      </div>
+
+      <div class="skill-card reveal" style="transition-delay:0.20s">
+        <div class="skill-card__icon">📊</div>
+        <div class="skill-card__label">Monitoring &amp; Observability</div>
+        <div class="skill-tags">
+          <span class="tag">Infrastructure Monitoring</span>
+          <span class="tag">Incident Response</span>
+          <span class="tag">RCA</span>
+        </div>
+      </div>
+
+      <div class="skill-card reveal" style="transition-delay:0.24s">
+        <div class="skill-card__icon">🎫</div>
+        <div class="skill-card__label">ITSM</div>
+        <div class="skill-tags">
+          <span class="tag">ServiceNow</span>
+          <span class="tag">ITIL Practices</span>
+          <span class="tag">Change Management</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Experience ──────────────────────────────────────────────────────────────── -->
+<section id="experience">
+  <div class="container section-wrap">
+    <div class="section-label reveal">Experience</div>
+    <h2 class="section-title reveal">7+ Years in Production</h2>
+
+    <div class="timeline">
+
+      <!-- Lenskart -->
+      <div class="timeline__item reveal">
+        <div class="timeline__dot"></div>
+        <div class="timeline__meta">
+          <span class="timeline__period">Jun 2025 — Jun 2026</span>
+          <span class="timeline__badge">Current</span>
+        </div>
+        <div class="timeline__role">Cloud Support Engineer</div>
+        <div class="timeline__company">Lenskart &nbsp;·&nbsp; Delhi, India</div>
+        <ul class="timeline__bullets">
+          <li>Provided <strong>L2/L3 cloud support</strong> across AWS, Azure, and GCP for a high-traffic national e-commerce platform.</li>
+          <li>Maintained <strong>99.9% uptime</strong> (≤ 43.8 min downtime/month) through proactive monitoring and SLA-driven incident resolution.</li>
+          <li>Built <strong>Python-based alert scripts</strong> to track CPU, RAM, and disk usage via automated email notifications, reducing MTTD for resource bottlenecks.</li>
+          <li>Drove cloud cost optimisation through instance right-sizing, autoscaling, and idle resource decommissioning — achieving <strong>35%+ cost reduction</strong>.</li>
+          <li>Deployed and managed containerised workloads with <strong>Docker and Kubernetes</strong>, supporting smooth rollouts and rollback procedures.</li>
+          <li>Authored and version-controlled <strong>Terraform modules</strong> for infrastructure provisioning, improving consistency across dev, staging, and production.</li>
+          <li>Managed incidents, changes, and service requests end-to-end in <strong>ServiceNow</strong>, maintaining audit-ready documentation.</li>
+        </ul>
+      </div>
+
+      <!-- NAB -->
+      <div class="timeline__item reveal">
+        <div class="timeline__dot" style="background:var(--orange)"></div>
+        <div class="timeline__meta">
+          <span class="timeline__period">Mar 2023 — Jun 2025</span>
+        </div>
+        <div class="timeline__role">Cloud Support Engineer</div>
+        <div class="timeline__company">National Australia Bank (NAB) &nbsp;·&nbsp; Remote / Hybrid</div>
+        <ul class="timeline__bullets">
+          <li>Delivered <strong>24×7 cloud infrastructure support</strong> for a regulated banking environment on AWS and Azure, prioritising security, compliance, and availability.</li>
+          <li>Consistently maintained <strong>99.9% system availability</strong> for customer-facing banking applications through proactive monitoring and incident response.</li>
+          <li>Managed <strong>CI/CD pipelines using Jenkins and GitHub</strong>, enabling reliable, repeatable application deployments to cloud environments.</li>
+          <li>Used <strong>Terraform</strong> to provision and manage cloud infrastructure as code, cutting manual configuration errors and deployment time.</li>
+          <li>Troubleshot <strong>Docker and Kubernetes</strong> container and pod-level issues in collaboration with application development teams.</li>
+          <li>Contributed to <strong>FinOps cost governance reviews</strong>, identifying underutilised resources and recommending right-sizing measures.</li>
+          <li>Adhered to <strong>ITIL-aligned ITSM processes</strong> in ServiceNow within a strictly regulated financial-services environment.</li>
+        </ul>
+      </div>
+
+      <!-- HCL -->
+      <div class="timeline__item reveal">
+        <div class="timeline__dot" style="background:var(--green)"></div>
+        <div class="timeline__meta">
+          <span class="timeline__period">Mar 2019 — Feb 2023</span>
+        </div>
+        <div class="timeline__role">Associate / Cloud Support Engineer</div>
+        <div class="timeline__company">HCL Technologies &nbsp;·&nbsp; India</div>
+        <ul class="timeline__bullets">
+          <li>Joined via the <strong>HCL TechBee Programme</strong>, progressing from trainee to hands-on cloud support across AWS and Azure environments.</li>
+          <li>Monitored server health, network connectivity, and application performance, escalating and resolving incidents to meet uptime and SLA targets.</li>
+          <li>Assisted in <strong>on-premises to cloud migrations</strong>, supporting infrastructure setup and post-migration validation.</li>
+          <li>Gained foundational experience with <strong>Docker and Kubernetes</strong> as part of infrastructure modernisation projects.</li>
+          <li>Logged and resolved support tickets in <strong>ServiceNow</strong>, building a knowledge base for recurring issues.</li>
+          <li>Began writing <strong>Python scripts</strong> to automate routine monitoring and reporting tasks.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Education ───────────────────────────────────────────────────────────────── -->
+<section id="education">
+  <div class="container section-wrap">
+    <div class="section-label reveal">Education</div>
+    <h2 class="section-title reveal">Academic Background</h2>
+    <div class="edu-card reveal">
+      <div class="edu-card__icon">🎓</div>
+      <div>
+        <div class="edu-card__degree">Bachelor of Science (B.Sc.)</div>
+        <div class="edu-card__inst">Birla Institute of Technology and Science (BITS), Pilani</div>
+        <div class="edu-card__via">Completed via the HCL TechBee Industry Programme — a work-integrated learning pathway combining full-time employment at HCL Technologies with an accredited B.Sc. degree from BITS Pilani.</div>
+        <div class="edu-card__period">2019 – 2023</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Contact ─────────────────────────────────────────────────────────────────── -->
+<section id="contact">
+  <div class="container section-wrap">
+    <div class="contact__cta reveal">
+      <div class="section-label" style="justify-content:center">Contact</div>
+      <h2>Let's work together</h2>
+      <p>Open to new opportunities in cloud infrastructure, DevOps, and SRE roles.</p>
+      <div class="contact__links">
+        <a href="mailto:imrealaryanjain@gmail.com" class="btn btn--primary">✉ &nbsp;imrealaryanjain@gmail.com</a>
+        <a href="tel:+919971801593" class="btn btn--ghost">📞 &nbsp;+91 99718 01593</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ──────────────────────────────────────────────────────────────────── -->
+<footer>
+  <p>Aryan Jain &nbsp;·&nbsp; Cloud Support Engineer &nbsp;·&nbsp; Delhi, India &nbsp;·&nbsp; Built 2026</p>
+</footer>
+
+<script>
+// ── Scroll reveal ────────────────────────────────────────────────────────────
+const revealEls = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+}, { threshold: 0.12 });
+revealEls.forEach(el => observer.observe(el));
+
+// ── Uptime counter (counts up to 99.9 on load) ───────────────────────────────
+const counterEl = document.getElementById('uptime-counter');
+let current = 97.0;
+const target = 99.9;
+const interval = setInterval(() => {
+  current = Math.min(current + 0.08, target);
+  counterEl.innerHTML = current.toFixed(1) + '<span style="font-size:1.1rem">%</span>';
+  if (current >= target) clearInterval(interval);
+}, 28);
+</script>
+
+</body>
+</html>
