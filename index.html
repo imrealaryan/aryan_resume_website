@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aryan Jain — Cloud Security &amp; DevSecOps Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy-950:#0a111f;
+    --navy-900:#0f1830;
+    --navy-800:#182541;
+    --navy-700:#22335a;
+    --teal:#4fd8cb;
+    --teal-dim:#4fd8cb1a;
+    --amber:#f2b84b;
+    --ink-100:#eaeff7;
+    --ink-400:#8a97ac;
+    --ok:#57e0a0;
+
+    --font-display:'Space Grotesk', sans-serif;
+    --font-body:'Inter', sans-serif;
+    --font-mono:'JetBrains Mono', monospace;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  html{ scroll-behavior:smooth; }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; }
+  }
+
+  body{
+    background:var(--navy-950);
+    color:var(--ink-100);
+    font-family:var(--font-body);
+    line-height:1.6;
+    overflow-x:hidden;
+    background-image:
+      radial-gradient(circle at 15% 8%, rgba(79,216,203,0.07), transparent 45%),
+      radial-gradient(circle at 85% 25%, rgba(242,184,75,0.05), transparent 40%);
+  }
+
+  a{ color:inherit; }
+  ::selection{ background:var(--teal); color:var(--navy-950); }
+
+  :focus-visible{
+    outline:2px solid var(--teal);
+    outline-offset:3px;
+    border-radius:2px;
+  }
+
+  .wrap{ max-width:1080px; margin:0 auto; padding:0 28px; }
+
+  /* ---------- background grid + scanline ---------- */
+  .grid-bg{
+    position:fixed; inset:0; z-index:-2; pointer-events:none;
+    background-image:
+      linear-gradient(rgba(234,239,247,0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(234,239,247,0.035) 1px, transparent 1px);
+    background-size:42px 42px;
+    mask-image:linear-gradient(to bottom, rgba(0,0,0,0.9), rgba(0,0,0,0.15) 70%, transparent);
+  }
+  .scanline{
+    position:fixed; left:0; right:0; height:140px; z-index:-1; pointer-events:none;
+    background:linear-gradient(to bottom, transparent, rgba(79,216,203,0.06), transparent);
+    animation:sweep 9s linear infinite;
+  }
+  @keyframes sweep{
+    0%{ top:-140px; }
+    100%{ top:100vh; }
+  }
+
+  /* ---------- nav ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(10,17,31,0.82);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--navy-800);
+  }
+  nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 28px; max-width:1080px; margin:0 auto;
+  }
+  .logo{
+    font-family:var(--font-mono); font-size:14px; color:var(--teal);
+    letter-spacing:0.02em; white-space:nowrap;
+  }
+  .logo .path{ color:var(--ink-400); }
+  .logo .blink{ animation:blink 1.1s steps(2) infinite; }
+  @keyframes blink{ 50%{ opacity:0; } }
+
+  .nav-links{ display:flex; gap:28px; list-style:none; }
+  .nav-links a{
+    font-family:var(--font-mono); font-size:12.5px; text-decoration:none;
+    color:var(--ink-400); text-transform:lowercase; letter-spacing:0.03em;
+    transition:color 0.2s;
+    position:relative;
+  }
+  .nav-links a::before{ content:"./"; color:var(--navy-700); }
+  .nav-links a:hover, .nav-links a:focus-visible{ color:var(--teal); }
+
+  .nav-toggle{ display:none; }
+
+  /* ---------- hero ---------- */
+  .hero{
+    padding:96px 0 88px;
+    display:grid; grid-template-columns:1.15fr 0.85fr; gap:56px; align-items:center;
+  }
+  .clearance{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:var(--font-mono); font-size:11.5px; letter-spacing:0.08em;
+    color:var(--amber); border:1px solid rgba(242,184,75,0.35);
+    background:rgba(242,184,75,0.06);
+    padding:6px 12px; border-radius:3px; margin-bottom:22px;
+    text-transform:uppercase;
+  }
+  .clearance::before{ content:"●"; font-size:8px; color:var(--ok); }
+
+  h1.hero-name{
+    font-family:var(--font-display); font-weight:700;
+    font-size:clamp(38px, 5.4vw, 62px);
+    line-height:1.04; letter-spacing:-0.01em;
+    margin-bottom:14px;
+  }
+  .hero-role{
+    font-family:var(--font-mono); font-size:clamp(14px,1.8vw,17px);
+    color:var(--teal); margin-bottom:22px; letter-spacing:0.01em;
+  }
+  .hero-desc{
+    color:var(--ink-400); max-width:52ch; font-size:15.5px; margin-bottom:32px;
+  }
+  .hero-cta{ display:flex; gap:14px; flex-wrap:wrap; }
+
+  .btn{
+    font-family:var(--font-mono); font-size:13px; padding:12px 20px;
+    border-radius:3px; text-decoration:none; display:inline-flex; align-items:center; gap:8px;
+    border:1px solid var(--navy-700); transition:all 0.2s;
+  }
+  .btn-primary{ background:var(--teal); color:var(--navy-950); border-color:var(--teal); font-weight:600; }
+  .btn-primary:hover{ background:#6ee4d8; }
+  .btn-ghost{ color:var(--ink-100); }
+  .btn-ghost:hover{ border-color:var(--teal); color:var(--teal); }
+
+  /* ---------- terminal card ---------- */
+  .terminal{
+    background:var(--navy-900); border:1px solid var(--navy-800);
+    border-radius:8px; overflow:hidden;
+    box-shadow:0 20px 60px -20px rgba(0,0,0,0.6);
+  }
+  .term-bar{
+    display:flex; align-items:center; gap:7px;
+    padding:10px 14px; background:var(--navy-800);
+    border-bottom:1px solid var(--navy-700);
+  }
+  .term-dot{ width:9px; height:9px; border-radius:50%; background:var(--navy-700); }
+  .term-dot:nth-child(1){ background:#e97a7a; }
+  .term-dot:nth-child(2){ background:var(--amber); }
+  .term-dot:nth-child(3){ background:var(--ok); }
+  .term-title{ margin-left:8px; font-family:var(--font-mono); font-size:11px; color:var(--ink-400); }
+  .term-body{
+    padding:20px 18px; font-family:var(--font-mono); font-size:13px; color:var(--ink-100);
+    min-height:210px;
+  }
+  .term-body .prompt{ color:var(--teal); }
+  .term-body .out{ color:var(--ink-400); margin:4px 0 14px 0; }
+  .term-body .ok{ color:var(--ok); }
+  .cursor{
+    display:inline-block; width:7px; height:14px; background:var(--teal);
+    vertical-align:middle; margin-left:2px; animation:blink 1s steps(2) infinite;
+  }
+
+  /* ---------- section shell ---------- */
+  section{ padding:76px 0; border-top:1px solid var(--navy-800); }
+  .eyebrow{
+    font-family:var(--font-mono); font-size:11.5px; color:var(--amber);
+    letter-spacing:0.12em; text-transform:uppercase; margin-bottom:10px; display:block;
+  }
+  h2.section-title{
+    font-family:var(--font-display); font-size:clamp(26px,3vw,34px);
+    font-weight:600; margin-bottom:36px;
+  }
+
+  /* ---------- about ---------- */
+  .about-grid{ display:grid; grid-template-columns:1.4fr 1fr; gap:48px; align-items:start; }
+  .about-text{ color:var(--ink-400); font-size:15.5px; max-width:60ch; }
+  .about-text strong{ color:var(--ink-100); font-weight:600; }
+
+  .stat-list{ display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--navy-800); border:1px solid var(--navy-800); border-radius:8px; overflow:hidden; }
+  .stat{ background:var(--navy-900); padding:20px; }
+  .stat-num{ font-family:var(--font-display); font-size:26px; color:var(--teal); font-weight:700; }
+  .stat-label{ font-family:var(--font-mono); font-size:11px; color:var(--ink-400); margin-top:4px; text-transform:uppercase; letter-spacing:0.05em; }
+
+  /* ---------- skills ---------- */
+  .modules{ display:grid; grid-template-columns:repeat(3, 1fr); gap:18px; }
+  .module{
+    background:var(--navy-900); border:1px solid var(--navy-800); border-radius:8px;
+    overflow:hidden; transition:border-color 0.2s, transform 0.2s;
+  }
+  .module:hover{ border-color:var(--navy-700); transform:translateY(-2px); }
+  .module-head{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:12px 16px; background:var(--navy-800); border-bottom:1px solid var(--navy-700);
+  }
+  .module-tag{ font-family:var(--font-mono); font-size:11px; color:var(--teal); letter-spacing:0.04em; }
+  .module-dots{ display:flex; gap:5px; }
+  .module-dots span{ width:5px; height:5px; border-radius:50%; background:var(--navy-700); }
+  .module-body{ padding:16px; }
+  .module-title{ font-family:var(--font-display); font-size:16px; margin-bottom:10px; font-weight:600; }
+  .chips{ display:flex; flex-wrap:wrap; gap:7px; }
+  .chip{
+    font-family:var(--font-mono); font-size:11.5px; color:var(--ink-400);
+    border:1px solid var(--navy-700); padding:4px 9px; border-radius:20px;
+  }
+
+  /* ---------- pipeline / experience ---------- */
+  .pipeline{ position:relative; padding-left:34px; }
+  .pipeline::before{
+    content:""; position:absolute; left:9px; top:6px; bottom:6px; width:2px;
+    background:linear-gradient(to bottom, var(--teal), var(--navy-800) 90%);
+  }
+  .stage{ position:relative; padding-bottom:48px; }
+  .stage:last-child{ padding-bottom:0; }
+  .stage-node{
+    position:absolute; left:-34px; top:2px; width:20px; height:20px; border-radius:50%;
+    background:var(--navy-900); border:2px solid var(--teal);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .stage-node::after{ content:""; width:7px; height:7px; border-radius:50%; background:var(--teal); }
+  .stage.current .stage-node{ border-color:var(--ok); }
+  .stage.current .stage-node::after{ background:var(--ok); }
+
+  .stage-head{
+    display:flex; flex-wrap:wrap; align-items:baseline; justify-content:space-between; gap:10px;
+    margin-bottom:4px;
+  }
+  .stage-role{ font-family:var(--font-display); font-size:19px; font-weight:600; }
+  .stage-org{ color:var(--teal); font-weight:500; }
+  .stage-meta{ display:flex; align-items:center; gap:12px; }
+  .stage-date{ font-family:var(--font-mono); font-size:11.5px; color:var(--ink-400); }
+  .status-pill{
+    font-family:var(--font-mono); font-size:10.5px; padding:3px 9px; border-radius:20px;
+    border:1px solid rgba(87,224,160,0.35); color:var(--ok); background:rgba(87,224,160,0.07);
+    letter-spacing:0.03em; white-space:nowrap;
+  }
+  .stage.current .status-pill{ border-color:rgba(242,184,75,0.35); color:var(--amber); background:rgba(242,184,75,0.07); }
+
+  .stage-list{ list-style:none; margin-top:12px; display:flex; flex-direction:column; gap:8px; }
+  .stage-list li{ color:var(--ink-400); font-size:14.5px; padding-left:18px; position:relative; }
+  .stage-list li::before{ content:"→"; position:absolute; left:0; color:var(--navy-700); font-family:var(--font-mono); }
+
+  /* ---------- education ---------- */
+  .edu-grid{ display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+  .edu-card{
+    background:var(--navy-900); border:1px solid var(--navy-800); border-radius:8px; padding:22px;
+  }
+  .edu-status{ font-family:var(--font-mono); font-size:10.5px; color:var(--amber); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:10px; display:block; }
+  .edu-degree{ font-family:var(--font-display); font-size:18px; font-weight:600; margin-bottom:6px; }
+  .edu-school{ color:var(--teal); font-size:14px; margin-bottom:8px; }
+  .edu-meta{ font-family:var(--font-mono); font-size:11.5px; color:var(--ink-400); }
+  .edu-note{ margin-top:10px; color:var(--ink-400); font-size:13.5px; }
+
+  /* ---------- contact / footer ---------- */
+  .contact-panel{
+    background:var(--navy-900); border:1px solid var(--navy-800); border-radius:10px;
+    padding:44px; text-align:center;
+  }
+  .contact-panel h2{
+    font-family:var(--font-display); font-size:clamp(24px,3.4vw,32px); margin-bottom:10px; font-weight:600;
+  }
+  .contact-panel p{ color:var(--ink-400); margin-bottom:26px; }
+  .contact-links{ display:flex; flex-wrap:wrap; justify-content:center; gap:14px; }
+  .contact-links a{
+    font-family:var(--font-mono); font-size:13px; padding:10px 18px; border:1px solid var(--navy-700);
+    border-radius:3px; text-decoration:none; color:var(--ink-100); transition:all 0.2s;
+  }
+  .contact-links a:hover, .contact-links a:focus-visible{ border-color:var(--teal); color:var(--teal); }
+
+  footer{
+    padding:28px 0 40px; text-align:center;
+    font-family:var(--font-mono); font-size:11.5px; color:var(--navy-700);
+  }
+
+  /* ---------- responsive ---------- */
+  @media (max-width:860px){
+    .hero{ grid-template-columns:1fr; padding-top:64px; }
+    .about-grid{ grid-template-columns:1fr; }
+    .modules{ grid-template-columns:1fr 1fr; }
+    .edu-grid{ grid-template-columns:1fr; }
+  }
+  @media (max-width:600px){
+    .nav-links{
+      position:fixed; top:60px; left:0; right:0; background:var(--navy-950);
+      flex-direction:column; padding:20px 28px; gap:18px; border-bottom:1px solid var(--navy-800);
+      transform:translateY(-130%); transition:transform 0.25s ease; z-index:40;
+    }
+    .nav-links.open{ transform:translateY(0); }
+    .nav-toggle{
+      display:block; background:none; border:1px solid var(--navy-700); color:var(--ink-100);
+      font-family:var(--font-mono); font-size:12px; padding:7px 10px; border-radius:3px;
+    }
+    .modules{ grid-template-columns:1fr; }
+    .stat-list{ grid-template-columns:1fr 1fr; }
+    .contact-panel{ padding:28px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+<div class="scanline"></div>
+
+<header>
+  <nav>
+    <div class="logo">aryan<span class="path">@security</span><span class="path">:~$</span><span class="blink">_</span></div>
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks">menu</button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about">about</a></li>
+      <li><a href="#skills">skills</a></li>
+      <li><a href="#experience">experience</a></li>
+      <li><a href="#education">education</a></li>
+      <li><a href="#contact">contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+  <section class="hero wrap" id="home" style="border-top:none;">
+    <div>
+      <span class="clearance">clearance: granted</span>
+      <h1 class="hero-name">Aryan Jain</h1>
+      <div class="hero-role">Cloud Security Engineer — DevSecOps</div>
+      <p class="hero-desc">I secure and automate cloud infrastructure for a living — building CI/CD pipelines that don't ship vulnerabilities, and Terraform that doesn't drift. 5+ years across banking and e-commerce environments.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#contact">Get in touch</a>
+        <a class="btn btn-ghost" href="#experience">View pipeline history</a>
+      </div>
+    </div>
+
+    <div class="terminal">
+      <div class="term-bar">
+        <span class="term-dot"></span><span class="term-dot"></span><span class="term-dot"></span>
+        <span class="term-title">session — prod-us-east-1</span>
+      </div>
+      <div class="term-body">
+        <div><span class="prompt">$</span> whoami --role</div>
+        <div class="out">&gt; Cloud Security &amp; DevSecOps Engineer, 5+ yrs</div>
+
+        <div><span class="prompt">$</span> stack --list</div>
+        <div class="out">&gt; AWS · Azure · GCP · Kubernetes · Terraform · Python</div>
+
+        <div><span class="prompt">$</span> scan --target infra/ --full</div>
+        <div class="out">&gt; SAST: clean &nbsp;·&nbsp; DAST: clean<br>&gt; ISO alignment: <span class="ok">verified</span></div>
+
+        <div><span class="prompt">$</span> deploy --strategy blue-green<span class="cursor"></span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="wrap">
+    <span class="eyebrow">01 · About</span>
+    <h2 class="section-title">Summary</h2>
+    <div class="about-grid">
+      <p class="about-text">
+        I'm a Cloud Security and DevSecOps engineer who has spent the last five years making sure infrastructure
+        stays both <strong>fast to ship</strong> and <strong>hard to breach</strong>. My work sits at the intersection
+        of DevOps and security: building CI/CD pipelines with blue/green deployments, writing multi-cloud Terraform,
+        and wiring SAST, DAST, and SIEM telemetry into the delivery lifecycle so vulnerabilities get caught before
+        production does. I've done this inside a regulated bank and a high-growth e-commerce platform, and I bring
+        a GRC and ISO-compliance mindset to every environment I touch — including responsible use of AI/LLM tools
+        for troubleshooting, without ever exposing confidential data.
+      </p>
+      <div class="stat-list">
+        <div class="stat"><div class="stat-num">5+</div><div class="stat-label">Years experience</div></div>
+        <div class="stat"><div class="stat-num">3</div><div class="stat-label">Cloud platforms</div></div>
+        <div class="stat"><div class="stat-num">3</div><div class="stat-label">Companies</div></div>
+        <div class="stat"><div class="stat-num">0</div><div class="stat-label">Confidential leaks to LLMs</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills" class="wrap">
+    <span class="eyebrow">02 · Modules</span>
+    <h2 class="section-title">Core skills</h2>
+    <div class="modules">
+
+      <div class="module">
+        <div class="module-head"><span class="module-tag">[cloud]</span><div class="module-dots"><span></span><span></span><span></span></div></div>
+        <div class="module-body">
+          <div class="module-title">Cloud Platforms</div>
+          <div class="chips"><span class="chip">AWS</span><span class="chip">Azure</span><span class="chip">GCP</span><span class="chip">OpenStack</span><span class="chip">VMware</span></div>
+        </div>
+      </div>
+
+      <div class="module">
+        <div class="module-head"><span class="module-tag">[sec]</span><div class="module-dots"><span></span><span></span><span></span></div></div>
+        <div class="module-body">
+          <div class="module-title">Cloud Security</div>
+          <div class="chips"><span class="chip">AWS Security Hub</span><span class="chip">Azure Security Center</span><span class="chip">GCP SCC</span></div>
+        </div>
+      </div>
+
+      <div class="module">
+        <div class="module-head"><span class="module-tag">[ci/cd]</span><div class="module-dots"><span></span><span></span><span></span></div></div>
+        <div class="module-body">
+          <div class="module-title">DevSecOps &amp; CI/CD</div>
+          <div class="chips"><span class="chip">GitHub Actions</span><span class="chip">Jenkins</span><span class="chip">CodeDeploy</span><span class="chip">Blue/Green</span></div>
+        </div>
+      </div>
+
+      <div class="module">
+        <div class="module-head"><span class="module-tag">[iac]</span><div class="module-dots"><span></span><span></span><span></span></div></div>
+        <div class="module-body">
+          <div class="module-title">Infrastructure as Code</div>
+          <div class="chips"><span class="chip">Terraform</span><span class="chip">Kubernetes</span><span class="chip">Multi-cloud</span></div>
+        </div>
+      </div>
+
+      <div class="module">
+        <div class="module-head"><span class="module-tag">[test]</span><div class="module-dots"><span></span><span></span><span></span></div></div>
+        <div class="module-body">
+          <div class="module-title">Security Testing</div>
+          <div class="chips"><span class="chip">SAST</span><span class="chip">DAST</span><span class="chip">Vulnerability Assessment</span><span class="chip">Audits</span></div>
+        </div>
+      </div>
+
+      <div class="module">
+        <div class="module-head"><span class="module-tag">[mon]</span><div class="module-dots"><span></span><span></span><span></span></div></div>
+        <div class="module-body">
+          <div class="module-title">Monitoring &amp; SIEM</div>
+          <div class="chips"><span class="chip">Telemetry Integration</span><span class="chip">Incident Response</span></div>
+        </div>
+      </div>
+
+      <div class="module">
+        <div class="module-head"><span class="module-tag">[script]</span><div class="module-dots"><span></span><span></span><span></span></div></div>
+        <div class="module-body">
+          <div class="module-title">Scripting &amp; Automation</div>
+          <div class="chips"><span class="chip">Python</span><span class="chip">Shell / Bash</span></div>
+        </div>
+      </div>
+
+      <div class="module">
+        <div class="module-head"><span class="module-tag">[grc]</span><div class="module-dots"><span></span><span></span><span></span></div></div>
+        <div class="module-body">
+          <div class="module-title">Governance</div>
+          <div class="chips"><span class="chip">Risk Assessment</span><span class="chip">GRC</span><span class="chip">ISO Framework</span></div>
+        </div>
+      </div>
+
+      <div class="module">
+        <div class="module-head"><span class="module-tag">[ai]</span><div class="module-dots"><span></span><span></span><span></span></div></div>
+        <div class="module-body">
+          <div class="module-title">AI-Augmented Workflows</div>
+          <div class="chips"><span class="chip">ChatGPT</span><span class="chip">Claude</span><span class="chip">Confidentiality-first</span></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="experience" class="wrap">
+    <span class="eyebrow">03 · Deploy History</span>
+    <h2 class="section-title">Experience</h2>
+
+    <div class="pipeline">
+
+      <div class="stage current">
+        <div class="stage-node"></div>
+        <div class="stage-head">
+          <div><span class="stage-role">DevSecOps Engineer</span> — <span class="stage-org">Lenskart</span></div>
+          <div class="stage-meta"><span class="stage-date">Jun 2025 – Present</span><span class="status-pill">● in progress</span></div>
+        </div>
+        <ul class="stage-list">
+          <li>Design and maintain CI/CD pipelines with GitHub Actions and Jenkins, using blue/green deployment models for zero-downtime production releases.</li>
+          <li>Author multi-cloud Infrastructure-as-Code with Terraform to provision secure, scalable, highly available environments.</li>
+          <li>Integrate SAST and DAST tools into the pipeline and route security telemetry into SIEM platforms for centralized monitoring.</li>
+          <li>Build Python and Shell automation for security testing, vulnerability scanning, and remediation workflows.</li>
+          <li>Secure containerized workloads on Kubernetes across the full deployment lifecycle.</li>
+          <li>Use ChatGPT and Claude to accelerate troubleshooting while adhering to strict data confidentiality guidelines.</li>
+        </ul>
+      </div>
+
+      <div class="stage">
+        <div class="stage-node"></div>
+        <div class="stage-head">
+          <div><span class="stage-role">Cloud Support Engineer</span> — <span class="stage-org">National Australia Bank</span></div>
+          <div class="stage-meta"><span class="stage-date">Mar 2023 – Jun 2025</span><span class="status-pill">✓ passed</span></div>
+        </div>
+        <ul class="stage-list">
+          <li>Supported secure, highly available cloud infrastructure on AWS and Azure inside a regulated banking environment.</li>
+          <li>Performed risk assessments and contributed to GRC processes, supporting audits against ISO and internal standards.</li>
+          <li>Monitored cloud security posture with AWS Security Hub and Azure Security Center, remediating vulnerabilities.</li>
+          <li>Partnered with cybersecurity and IT operations to investigate incidents and harden cloud workloads.</li>
+          <li>Automated monitoring and operational tasks with Python and Shell scripts, cutting manual response time.</li>
+        </ul>
+      </div>
+
+      <div class="stage">
+        <div class="stage-node"></div>
+        <div class="stage-head">
+          <div><span class="stage-role">Cloud Security Engineer – Associate</span> — <span class="stage-org">HCL Technologies</span></div>
+          <div class="stage-meta"><span class="stage-date">Mar 2019 – Feb 2023</span><span class="status-pill">✓ passed</span></div>
+        </div>
+        <ul class="stage-list">
+          <li>Built and secured cloud infrastructure across AWS and OpenStack/VMware environments.</li>
+          <li>Supported development of cloud security policies, procedures, and guidelines aligned to ISO standards.</li>
+          <li>Ran security assessments and vulnerability audits to close configuration and compliance gaps.</li>
+          <li>Gained hands-on exposure to Kubernetes, Terraform, and Python while supporting DevOps and infra teams.</li>
+          <li>Mentored peers on cloud security best practices as part of the HCL TechBee early-career program.</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="education" class="wrap">
+    <span class="eyebrow">04 · Records</span>
+    <h2 class="section-title">Education</h2>
+    <div class="edu-grid">
+      <div class="edu-card">
+        <span class="edu-status">Scheduled</span>
+        <div class="edu-degree">M.Tech (WILP), Cloud Computing</div>
+        <div class="edu-school">BITS Pilani</div>
+        <div class="edu-meta">Commencing January 2027</div>
+        <p class="edu-note">Selected candidate for the Work Integrated Learning Programme.</p>
+      </div>
+      <div class="edu-card">
+        <span class="edu-status">Completed</span>
+        <div class="edu-degree">B.Sc</div>
+        <div class="edu-school">BITS Pilani</div>
+        <div class="edu-meta">2019 – 2023</div>
+        <p class="edu-note">Pursued via the HCL TechBee WILP programme, fully sponsored by HCL Technologies.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="wrap">
+    <div class="contact-panel">
+      <span class="eyebrow" style="text-align:center;">05 · Connect</span>
+      <h2>Let's talk security</h2>
+      <p>Open to Cloud Security and DevSecOps roles — reach out any way that works for you.</p>
+      <div class="contact-links">
+        <a href="mailto:imrealaryanjain@gmail.com">✉ imrealaryanjain@gmail.com</a>
+        <a href="tel:+919971801593">☎ +91 99718 01593</a>
+        <a href="https://www.linkedin.com/in/imrealaryanjain/" target="_blank" rel="noopener">LinkedIn ↗</a>
+        <a href="https://github.com/imrealaryan" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">© 2026 Aryan Jain — build passing on main</div>
+</footer>
+
+<script>
+  const toggle = document.getElementById('navToggle');
+  const links = document.getElementById('navLinks');
+  toggle.addEventListener('click', () => {
+    const open = links.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', open);
+  });
+  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    links.classList.remove('open');
+    toggle.setAttribute('aria-expanded', 'false');
+  }));
+</script>
+
+</body>
+</html>
