@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aryan Jain — Remote Customer Support Specialist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#16233D;
+    --navy-soft:#2C3E5C;
+    --cream:#F7F5EF;
+    --panel:#FFFFFF;
+    --teal:#0E7C74;
+    --teal-dark:#0A5A54;
+    --teal-tint:#E3F1EF;
+    --coral:#E1583F;
+    --coral-tint:#FBE7E1;
+    --slate:#5B6472;
+    --line:#E1DDD2;
+    --mono:'IBM Plex Mono', monospace;
+    --serif:'Fraunces', serif;
+    --sans:'Inter', sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--navy);
+    font-family:var(--sans);
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+  .wrap{max-width:920px;margin:0 auto;padding:0 28px;}
+
+  /* NAV */
+  header.nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(247,245,239,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    max-width:920px;margin:0 auto;padding:16px 28px;
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  .nav-mark{
+    font-family:var(--mono);font-size:13px;letter-spacing:0.06em;
+    display:flex;align-items:center;gap:8px;font-weight:500;
+  }
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--teal);display:inline-block;}
+  .nav-links{display:flex;gap:26px;font-size:14px;}
+  .nav-links a{text-decoration:none;color:var(--slate);}
+  .nav-links a:hover{color:var(--navy);}
+  .nav-cta{
+    font-family:var(--mono);font-size:13px;
+    border:1px solid var(--navy);border-radius:4px;
+    padding:8px 14px;text-decoration:none;color:var(--navy);
+    white-space:nowrap;
+  }
+  .nav-cta:hover{background:var(--navy);color:var(--cream);}
+
+  /* HERO */
+  .hero{padding:76px 0 60px;}
+  .eyebrow{
+    font-family:var(--mono);font-size:12.5px;letter-spacing:0.08em;
+    color:var(--teal-dark);text-transform:uppercase;
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--teal-tint);border-radius:20px;padding:6px 14px 6px 10px;
+    margin-bottom:26px;
+  }
+  .pulse{width:7px;height:7px;border-radius:50%;background:var(--teal);position:relative;}
+  .pulse::after{
+    content:'';position:absolute;inset:-4px;border-radius:50%;
+    border:1px solid var(--teal);opacity:0.6;
+    animation:pulse 2.2s ease-out infinite;
+  }
+  @keyframes pulse{0%{transform:scale(0.6);opacity:0.8;}100%{transform:scale(2.1);opacity:0;}}
+  h1.headline{
+    font-family:var(--serif);font-weight:500;
+    font-size:clamp(34px,5.4vw,58px);
+    line-height:1.08;letter-spacing:-0.01em;
+    margin:0 0 22px;max-width:12.5ch;
+  }
+  .hero p.sub{
+    font-size:18px;line-height:1.6;color:var(--slate);
+    max-width:56ch;margin:0 0 34px;
+  }
+  .hero-actions{display:flex;gap:14px;flex-wrap:wrap;}
+  .btn{
+    font-family:var(--sans);font-size:14.5px;font-weight:500;
+    padding:13px 22px;border-radius:6px;text-decoration:none;
+    display:inline-flex;align-items:center;gap:8px;
+  }
+  .btn-primary{background:var(--navy);color:var(--cream);}
+  .btn-primary:hover{background:var(--navy-soft);}
+  .btn-ghost{border:1px solid var(--line);color:var(--navy);background:var(--panel);}
+  .btn-ghost:hover{border-color:var(--navy);}
+
+  /* STAT STRIP */
+  .stats{
+    border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+    display:grid;grid-template-columns:repeat(4,1fr);
+  }
+  .stat{padding:22px 28px;border-right:1px solid var(--line);}
+  .stat:last-child{border-right:none;}
+  .stat .num{font-family:var(--serif);font-size:26px;color:var(--navy);}
+  .stat .label{font-family:var(--mono);font-size:11.5px;color:var(--slate);letter-spacing:0.03em;margin-top:4px;}
+
+  /* SECTION HEADERS */
+  section{padding:64px 0;}
+  .sec-head{margin-bottom:38px;}
+  .sec-eyebrow{
+    font-family:var(--mono);font-size:12px;letter-spacing:0.1em;
+    color:var(--coral);text-transform:uppercase;margin-bottom:10px;
+  }
+  h2.sec-title{
+    font-family:var(--serif);font-weight:500;font-size:30px;margin:0;
+  }
+
+  /* TICKET CARDS */
+  .ticket{
+    background:var(--panel);border:1px solid var(--line);border-radius:10px;
+    margin-bottom:20px;overflow:hidden;
+  }
+  .ticket-bar{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:12px 22px;background:#FBFAF6;border-bottom:1px solid var(--line);
+    font-family:var(--mono);font-size:12px;color:var(--slate);
+    flex-wrap:wrap;gap:8px;
+  }
+  .ticket-id{color:var(--navy);font-weight:500;}
+  .status-pill{
+    display:inline-flex;align-items:center;gap:6px;
+    background:var(--teal-tint);color:var(--teal-dark);
+    font-family:var(--mono);font-size:11px;letter-spacing:0.04em;
+    padding:4px 10px;border-radius:20px;
+  }
+  .status-pill .dot2{width:6px;height:6px;border-radius:50%;background:var(--teal);}
+  .ticket-body{padding:24px 22px 26px;}
+  .role-row{
+    display:flex;justify-content:space-between;align-items:baseline;
+    flex-wrap:wrap;gap:6px;margin-bottom:14px;
+  }
+  .role{font-family:var(--serif);font-size:21px;font-weight:500;}
+  .company{color:var(--teal-dark);font-weight:500;}
+  .ticket ul{margin:0;padding-left:18px;}
+  .ticket li{
+    font-size:15px;line-height:1.65;color:#33394A;margin-bottom:8px;
+  }
+  .ticket li::marker{color:var(--coral);}
+
+  /* SKILLS */
+  .skill-group{margin-bottom:26px;}
+  .skill-group-label{
+    font-family:var(--mono);font-size:12px;color:var(--slate);
+    letter-spacing:0.04em;margin-bottom:12px;text-transform:uppercase;
+  }
+  .pills{display:flex;flex-wrap:wrap;gap:9px;}
+  .pill{
+    font-size:14px;padding:8px 14px;border-radius:20px;
+    background:var(--panel);border:1px solid var(--line);color:var(--navy);
+  }
+
+  /* EDUCATION */
+  .edu-card{
+    background:var(--panel);border:1px solid var(--line);border-radius:10px;
+    padding:22px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;
+  }
+  .edu-card .deg{font-family:var(--serif);font-size:19px;}
+  .edu-card .school{color:var(--slate);font-size:14.5px;margin-top:4px;}
+  .edu-card .yrs{font-family:var(--mono);font-size:13px;color:var(--slate);}
+
+  /* CONTACT */
+  .contact-panel{
+    background:var(--navy);color:var(--cream);border-radius:14px;
+    padding:46px 40px;
+  }
+  .contact-panel .sec-eyebrow{color:#7FD9CF;}
+  .contact-panel h2{
+    font-family:var(--serif);font-weight:500;font-size:30px;margin:0 0 12px;color:#fff;
+  }
+  .contact-panel p{color:#C6CBD8;font-size:16px;line-height:1.6;max-width:52ch;margin:0 0 28px;}
+  .contact-rows{display:flex;flex-direction:column;gap:0;border-top:1px solid rgba(255,255,255,0.14);}
+  .contact-row{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:16px 0;border-bottom:1px solid rgba(255,255,255,0.14);
+    font-size:15px;flex-wrap:wrap;gap:6px;
+  }
+  .contact-row .k{color:#8D95A8;font-family:var(--mono);font-size:12.5px;letter-spacing:0.04em;text-transform:uppercase;}
+  .contact-row .v a{color:#fff;text-decoration:none;font-weight:500;}
+  .contact-row .v a:hover{color:#7FD9CF;}
+
+  footer{
+    text-align:center;padding:36px 0 50px;
+    font-family:var(--mono);font-size:12px;color:var(--slate);
+  }
+
+  @media (max-width:640px){
+    .stats{grid-template-columns:repeat(2,1fr);}
+    .stat:nth-child(2){border-right:none;}
+    .contact-panel{padding:32px 22px;}
+    .nav-links{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="nav-mark"><span class="dot"></span>ARYAN JAIN</div>
+    <nav class="nav-links">
+      <a href="#experience">Experience</a>
+      <a href="#skills">Skills</a>
+      <a href="#education">Education</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="nav-cta" href="mailto:imrealaryanjain@gmail.com">Start a conversation</a>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <section class="hero">
+    <div class="eyebrow"><span class="pulse"></span>Status: available for remote roles</div>
+    <h1 class="headline">Every ticket has a person behind it.</h1>
+    <p class="sub">I'm Aryan — a remote customer &amp; technical support specialist with 7+ years resolving issues for banking, e-commerce, and global BPO clients, across HCL Technologies, National Australia Bank, and Lenskart.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="mailto:imrealaryanjain@gmail.com">Start a conversation</a>
+      <a class="btn btn-ghost" href="https://www.linkedin.com/in/imrealaryanjain/" target="_blank" rel="noopener">View LinkedIn</a>
+    </div>
+  </section>
+
+  <div class="stats">
+    <div class="stat"><div class="num">7+</div><div class="label">YEARS IN SUPPORT</div></div>
+    <div class="stat"><div class="num">3</div><div class="label">COMPANIES · GLOBAL BRANDS</div></div>
+    <div class="stat"><div class="num">2</div><div class="label">INDUSTRIES: BANKING + RETAIL</div></div>
+    <div class="stat"><div class="num">100%</div><div class="label">REMOTE-READY</div></div>
+  </div>
+
+  <section id="experience">
+    <div class="sec-head">
+      <div class="sec-eyebrow">Case history</div>
+      <h2 class="sec-title">Resolved tickets, by role</h2>
+    </div>
+
+    <div class="ticket">
+      <div class="ticket-bar">
+        <span class="ticket-id">TCK-2025-003 · Lenskart</span>
+        <span class="status-pill"><span class="dot2"></span>RESOLVED</span>
+        <span>Jun 2025 – Jun 2026</span>
+      </div>
+      <div class="ticket-body">
+        <div class="role-row">
+          <div class="role">Customer Support Executive</div>
+          <div class="company">Lenskart</div>
+        </div>
+        <ul>
+          <li>Handled inbound inquiries across phone, chat, and email covering orders, returns, exchanges, and prescription/lens issues for a high-volume e-commerce eyewear brand.</li>
+          <li>Coordinated with logistics, warehouse, and quality teams to resolve delivery delays and product defects.</li>
+          <li>Maintained CSAT and quality scores above team targets during peak-season ticket volume.</li>
+          <li>Logged interactions in the CRM and flagged recurring product/process issues to operations.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="ticket">
+      <div class="ticket-bar">
+        <span class="ticket-id">TCK-2023-002 · NAB</span>
+        <span class="status-pill"><span class="dot2"></span>RESOLVED</span>
+        <span>Mar 2023 – Jun 2025</span>
+      </div>
+      <div class="ticket-body">
+        <div class="role-row">
+          <div class="role">Customer Technical Support</div>
+          <div class="company">National Australia Bank</div>
+        </div>
+        <ul>
+          <li>Supported retail banking customers on NAB's online banking platform, mobile app, and card services.</li>
+          <li>Diagnosed login, transaction, and app-functionality issues, resolving at first contact where possible and escalating complex cases to L2/L3 with clear documentation.</li>
+          <li>Guided customers through security verification and fraud-prevention steps in line with banking compliance standards.</li>
+          <li>Contributed troubleshooting write-ups to the internal knowledge base, reducing repeat-issue handling time.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="ticket">
+      <div class="ticket-bar">
+        <span class="ticket-id">TCK-2019-001 · HCL</span>
+        <span class="status-pill"><span class="dot2"></span>RESOLVED</span>
+        <span>Mar 2019 – Feb 2023</span>
+      </div>
+      <div class="ticket-body">
+        <div class="role-row">
+          <div class="role">Customer Support Specialist</div>
+          <div class="company">HCL Technologies</div>
+        </div>
+        <ul>
+          <li>Delivered voice and chat-based support for an international client account, handling technical, billing, and account-management queries.</li>
+          <li>Consistently met or exceeded Average Handle Time (AHT) and First Call Resolution (FCR) targets across 4 years.</li>
+          <li>Supported onboarding and floor training of new hires as part of the HCL TechBee program.</li>
+          <li>Logged and tracked cases through the CRM/ticketing system, ensuring accurate categorization and escalation.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="sec-head">
+      <div class="sec-eyebrow">Toolkit</div>
+      <h2 class="sec-title">Tools &amp; skills</h2>
+    </div>
+
+    <div class="skill-group">
+      <div class="skill-group-label">Support platforms</div>
+      <div class="pills">
+        <span class="pill">Zendesk</span>
+        <span class="pill">Freshdesk</span>
+        <span class="pill">Salesforce Service Cloud</span>
+        <span class="pill">Live chat platforms</span>
+        <span class="pill">CRM &amp; ticketing systems</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-label">Core skills</div>
+      <div class="pills">
+        <span class="pill">Technical troubleshooting</span>
+        <span class="pill">First-call resolution</span>
+        <span class="pill">Escalation management</span>
+        <span class="pill">SLA &amp; CSAT ownership</span>
+        <span class="pill">De-escalation</span>
+        <span class="pill">Knowledge-base documentation</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-label">Remote collaboration</div>
+      <div class="pills">
+        <span class="pill">Zoom</span>
+        <span class="pill">Microsoft Teams</span>
+        <span class="pill">Slack</span>
+        <span class="pill">Google Workspace</span>
+        <span class="pill">Microsoft Office</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="education">
+    <div class="sec-head">
+      <div class="sec-eyebrow">Background</div>
+      <h2 class="sec-title">Education</h2>
+    </div>
+    <div class="edu-card">
+      <div>
+        <div class="deg">B.Sc., BITS Pilani</div>
+        <div class="school">Work Integrated Learning Programme, sponsored via HCL TechBee</div>
+      </div>
+      <div class="yrs">2019 – 2023</div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="contact-panel">
+      <div class="sec-eyebrow">Open a new ticket</div>
+      <h2>Let's talk about your team.</h2>
+      <p>Open to remote customer support and technical support roles, across time zones. Usually responds within a day.</p>
+      <div class="contact-rows">
+        <div class="contact-row"><span class="k">Email</span><span class="v"><a href="mailto:imrealaryanjain@gmail.com">imrealaryanjain@gmail.com</a></span></div>
+        <div class="contact-row"><span class="k">Phone</span><span class="v"><a href="tel:+919971801593">+91 99718 01593</a></span></div>
+        <div class="contact-row"><span class="k">LinkedIn</span><span class="v"><a href="https://www.linkedin.com/in/imrealaryanjain/" target="_blank" rel="noopener">linkedin.com/in/imrealaryanjain</a></span></div>
+        <div class="contact-row"><span class="k">Location</span><span class="v">Delhi, India — open to remote</span></div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>ARYAN JAIN — BUILT FOR REMOTE-FIRST TEAMS</footer>
+
+</body>
+</html>
