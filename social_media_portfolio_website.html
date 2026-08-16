@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aryan Jain - Social Media Manager & Creative Strategist</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Navigation */
+        nav {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: opacity 0.3s;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 100px 20px;
+            text-align: center;
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: white;
+            color: #667eea;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        /* Sections */
+        section {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            color: #667eea;
+            margin-bottom: 3rem;
+            text-align: center;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        h2::after {
+            content: '';
+            width: 100px;
+            height: 4px;
+            background: #764ba2;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text h3 {
+            font-size: 1.8rem;
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+
+        .about-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            border-left: 4px solid #667eea;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .stat-label {
+            color: #666;
+            margin-top: 0.5rem;
+        }
+
+        /* Experience Timeline */
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .timeline-item {
+            margin-bottom: 3rem;
+            padding-left: 3rem;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: '';
+            width: 12px;
+            height: 12px;
+            background: #667eea;
+            border-radius: 50%;
+            position: absolute;
+            left: -36px;
+            top: 10px;
+            border: 3px solid white;
+            box-shadow: 0 0 0 3px #667eea;
+        }
+
+        .timeline-item:last-child::after {
+            content: '';
+            display: none;
+        }
+
+        .timeline-item h3 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-date {
+            color: #764ba2;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .timeline-description {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-card {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.2);
+        }
+
+        .skill-card h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+
+        .skill-list {
+            list-style: none;
+        }
+
+        .skill-list li {
+            padding: 0.5rem 0;
+            color: #666;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .skill-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #764ba2;
+            font-weight: bold;
+        }
+
+        /* Achievements Section */
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .achievement-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .achievement-card h3 {
+            margin-bottom: 1rem;
+        }
+
+        .achievement-card p {
+            opacity: 0.95;
+            line-height: 1.8;
+        }
+
+        /* Portfolio Section */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .portfolio-item {
+            background: #f8f9fa;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s;
+        }
+
+        .portfolio-item:hover {
+            transform: scale(1.05);
+        }
+
+        .portfolio-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+        }
+
+        .portfolio-content {
+            padding: 1.5rem;
+        }
+
+        .portfolio-content h3 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .portfolio-content p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Testimonials */
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .testimonial-text {
+            color: #666;
+            margin-bottom: 1rem;
+            font-style: italic;
+            line-height: 1.8;
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .testimonial-position {
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        /* Contact Section */
+        .contact-content {
+            text-align: center;
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .contact-box {
+            padding: 2rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .contact-box h3 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-box p {
+            color: #666;
+        }
+
+        /* Footer */
+        footer {
+            background: #2d3436;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .social-links a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .about-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#achievements">Achievements</a></li>
+            <li><a href="#portfolio">Portfolio</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <h1>Aryan Jain</h1>
+        <p>Social Media Manager & Creative Strategist</p>
+        <p style="font-size: 1.1rem; opacity: 0.9;">Building digital communities | Crafting viral campaigns | Driving business growth</p>
+        <div class="hero-buttons">
+            <a href="#portfolio" class="btn btn-primary">View My Work</a>
+            <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <h2>About Me</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <h3>Social Media Expert with 7+ Years Experience</h3>
+                <p>I'm a passionate social media manager and creative strategist with a proven track record of building and scaling digital communities for Fortune 500 companies and innovative startups.</p>
+                <p style="margin-top: 1rem;">Currently leading creative and strategic initiatives at Inspired Entertainment by MS Dhoni, where I'm responsible for content strategy, campaign execution, and team management across multiple platforms.</p>
+                <p style="margin-top: 1rem;">My expertise spans from strategic planning and content creation to analytics and performance optimization. I believe in data-driven decisions combined with creative storytelling to achieve measurable business results.</p>
+            </div>
+            <div class="about-stats">
+                <div class="stat">
+                    <div class="stat-number">7+</div>
+                    <div class="stat-label">Years Experience</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">50M+</div>
+                    <div class="stat-label">Impressions Annually</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">3.5M+</div>
+                    <div class="stat-label">Followers Managed</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience">
+        <h2>Professional Experience</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <h3>Creative & Strategy Manager</h3>
+                <div class="timeline-date">Inspired Entertainment by MS Dhoni | November 2023 - Present</div>
+                <div class="timeline-description">
+                    <p>Leading creative direction and strategic initiatives for sports entertainment brand. Increased viewership by 180% within 6 months through integrated content strategy. Managing creative team of 8+ professionals and executing campaigns generating ₹15Cr+ revenue contribution.</p>
+                    <p style="margin-top: 0.5rem;"><strong>Key Achievements:</strong> 50M+ campaign reach • 250% organic growth • 3.5% engagement rate</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <h3>Social Media Manager (Promoted)</h3>
+                <div class="timeline-date">HCL Technologies | July 2020 - February 2023</div>
+                <div class="timeline-description">
+                    <p>Managed social media presence for Fortune 500 IT services company. Grew LinkedIn followers from 800K to 2.5M+ (212% growth). Executed 50+ thought leadership campaigns and managed annual budget of ₹80Lacs+ with 450% ROI.</p>
+                    <p style="margin-top: 0.5rem;"><strong>Key Achievements:</strong> 320% website traffic increase • 200+ monthly content pieces • 450% ROI</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <h3>Social Media Executive</h3>
+                <div class="timeline-date">HCL Technologies | March 2019 - June 2020</div>
+                <div class="timeline-description">
+                    <p>Started career managing day-to-day social media operations. Created content strategy, managed community engagement, and supported campaign execution across multiple platforms. Promoted to Manager role based on exceptional performance.</p>
+                    <p style="margin-top: 0.5rem;"><strong>Key Achievements:</strong> Built content strategy • Grew followers by 45% • Promoted to Manager</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+        <h2>Core Competencies</h2>
+        <div class="skills-grid">
+            <div class="skill-card">
+                <h3>🎯 Social Media Platforms</h3>
+                <ul class="skill-list">
+                    <li>LinkedIn & Facebook</li>
+                    <li>Instagram & TikTok</li>
+                    <li>Twitter/X & YouTube</li>
+                    <li>Snapchat & Pinterest</li>
+                    <li>WhatsApp Business</li>
+                </ul>
+            </div>
+
+            <div class="skill-card">
+                <h3>📱 Content Creation</h3>
+                <ul class="skill-list">
+                    <li>Copywriting & Storytelling</li>
+                    <li>Video Production</li>
+                    <li>Graphic Design</li>
+                    <li>Infographics</li>
+                    <li>User-Generated Content</li>
+                </ul>
+            </div>
+
+            <div class="skill-card">
+                <h3>📊 Analytics & Tools</h3>
+                <ul class="skill-list">
+                    <li>Google Analytics 4</li>
+                    <li>Meta Business Suite</li>
+                    <li>Sprout Social</li>
+                    <li>Adobe Analytics</li>
+                    <li>Brandwatch</li>
+                </ul>
+            </div>
+
+            <div class="skill-card">
+                <h3>💼 Digital Marketing</h3>
+                <ul class="skill-list">
+                    <li>Paid Social Advertising</li>
+                    <li>Email Marketing</li>
+                    <li>SEO/SEM</li>
+                    <li>A/B Testing</li>
+                    <li>Conversion Optimization</li>
+                </ul>
+            </div>
+
+            <div class="skill-card">
+                <h3>👥 Leadership</h3>
+                <ul class="skill-list">
+                    <li>Team Management</li>
+                    <li>Project Management</li>
+                    <li>Budget Management (₹80Lacs+)</li>
+                    <li>Stakeholder Management</li>
+                    <li>Training & Development</li>
+                </ul>
+            </div>
+
+            <div class="skill-card">
+                <h3>🎨 Design Tools</h3>
+                <ul class="skill-list">
+                    <li>Canva Pro</li>
+                    <li>Adobe Photoshop</li>
+                    <li>Adobe Illustrator</li>
+                    <li>CapCut</li>
+                    <li>Figma</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Achievements Section -->
+    <section id="achievements">
+        <h2>Key Achievements</h2>
+        <div class="achievements-grid">
+            <div class="achievement-card">
+                <h3>🚀 212% LinkedIn Growth</h3>
+                <p>Grew HCL Technologies LinkedIn followers from 800K to 2.5M+ through strategic content and thought leadership initiatives, making it one of India's top corporate LinkedIn accounts.</p>
+            </div>
+
+            <div class="achievement-card">
+                <h3>💰 450% ROI on Budget</h3>
+                <p>Managed ₹80Lacs+ annual social media budget and delivered 450% ROI through optimized paid social campaigns and organic content strategy at HCL.</p>
+            </div>
+
+            <div class="achievement-card">
+                <h3>🎬 50M+ Campaign Reach</h3>
+                <p>Executed 10+ viral campaigns at Inspired Entertainment averaging 50M+ impressions with 3.5%+ engagement rate, significantly above industry standards (1-2%).</p>
+            </div>
+
+            <div class="achievement-card">
+                <h3>📈 180% Viewership Growth</h3>
+                <p>Increased viewership for sports entertainment brand by 180% within 6 months through integrated content strategy and platform diversification.</p>
+            </div>
+
+            <div class="achievement-card">
+                <h3>🏆 Industry Recognition</h3>
+                <p>Awarded "Best Social Media Manager" at HCL (2022), featured in "Top 50 Social Media Managers in India", and published case studies in industry journals.</p>
+            </div>
+
+            <div class="achievement-card">
+                <h3>👥 Team Leadership</h3>
+                <p>Built and managed cross-functional teams of 8+ professionals. Trained 100+ business leaders on social media best practices through workshops and webinars.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio">
+        <h2>Featured Campaigns</h2>
+        <div class="portfolio-grid">
+            <div class="portfolio-item">
+                <div class="portfolio-image">📱</div>
+                <div class="portfolio-content">
+                    <h3>#HCLGoal2027 Campaign</h3>
+                    <p><strong>Result:</strong> 25M+ impressions, 2.8M+ engagements. Featured in 15+ media publications and won industry recognition.</p>
+                </div>
+            </div>
+
+            <div class="portfolio-item">
+                <div class="portfolio-image">🎓</div>
+                <div class="portfolio-content">
+                    <h3>Tech Skills Initiative</h3>
+                    <p><strong>Result:</strong> 50M+ reach, 500K+ qualified leads. Generated ₹5Cr+ business opportunity for company.</p>
+                </div>
+            </div>
+
+            <div class="portfolio-item">
+                <div class="portfolio-image">🎯</div>
+                <div class="portfolio-content">
+                    <h3>Diversity & Inclusion</h3>
+                    <p><strong>Result:</strong> 30M+ impressions. Won industry recognition award for authentic storytelling and cultural impact.</p>
+                </div>
+            </div>
+
+            <div class="portfolio-item">
+                <div class="portfolio-image">⭐</div>
+                <div class="portfolio-content">
+                    <h3>Customer Success Stories</h3>
+                    <p><strong>Result:</strong> 100+ stories published, 15M+ reach, 4.2% engagement rate. Showcased real customer impact.</p>
+                </div>
+            </div>
+
+            <div class="portfolio-item">
+                <div class="portfolio-image">🏆</div>
+                <div class="portfolio-content">
+                    <h3>Viral Sports Campaign</h3>
+                    <p><strong>Result:</strong> 50M+ reach, 3.5M+ engagements. Partnered with 100+ micro/macro influencers for amplification.</p>
+                </div>
+            </div>
+
+            <div class="portfolio-item">
+                <div class="portfolio-image">📺</div>
+                <div class="portfolio-content">
+                    <h3>Weekly Webinar Series</h3>
+                    <p><strong>Result:</strong> 10K+ live viewers per session, 250K+ newsletter subscribers. Built engaged community.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section style="background: #f8f9fa;">
+        <h2>What People Say</h2>
+        <div class="testimonial-grid">
+            <div class="testimonial-card">
+                <div class="testimonial-text">"Aryan transformed our social media presence completely. His strategic approach and creative execution resulted in exceptional growth and engagement."</div>
+                <div class="testimonial-author">Rajesh Kumar</div>
+                <div class="testimonial-position">VP Marketing, HCL Technologies</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="testimonial-text">"Working with Aryan on Inspired Entertainment campaigns has been phenomenal. His understanding of sports and entertainment dynamics is unmatched."</div>
+                <div class="testimonial-author">Priya Singh</div>
+                <div class="testimonial-position">CEO, Inspired Entertainment</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="testimonial-text">"As a leader, Aryan brings both strategic vision and hands-on execution. He's built an exceptional team and delivered outstanding results consistently."</div>
+                <div class="testimonial-author">Amit Patel</div>
+                <div class="testimonial-position">Director, Digital Marketing</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <h2>Let's Connect</h2>
+        <div class="contact-content">
+            <p style="font-size: 1.1rem; margin-bottom: 2rem;">I'm always interested in discussing new opportunities, collaborations, and creative projects.</p>
+            <div class="contact-info">
+                <div class="contact-box">
+                    <h3>📧 Email</h3>
+                    <p><a href="mailto:aditijain29112007rk@gmail.com" style="color: #667eea; text-decoration: none;">aditijain29112007rk@gmail.com</a></p>
+                </div>
+                <div class="contact-box">
+                    <h3>📱 Phone</h3>
+                    <p>+91-9205526766</p>
+                </div>
+                <div class="contact-box">
+                    <h3>📍 Location</h3>
+                    <p>Delhi, NCR | Open to Remote</p>
+                </div>
+            </div>
+            <div class="social-links">
+                <a href="https://linkedin.com/in/aryan-jain" target="_blank">LinkedIn</a>
+                <a href="https://twitter.com/aryan_jain" target="_blank">Twitter</a>
+                <a href="https://instagram.com/aryan_jain" target="_blank">Instagram</a>
+                <a href="https://github.com/aryan-jain" target="_blank">Portfolio</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Aryan Jain. All rights reserved.</p>
+        <p style="font-size: 0.9rem; margin-top: 1rem; opacity: 0.8;">Crafted with passion | Designed for impact</p>
+    </footer>
+</body>
+</html>
